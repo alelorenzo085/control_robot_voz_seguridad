@@ -1,8 +1,8 @@
-# Laboratorio 53: Control por voz de un robot industrial 4.0
+# Laboratorio 54: Control por voz de un robot industrial 4.0 con seguridad del hablante
 
 ## Objetivo
 
-Integrar reconocimiento de voz offline (Vosk) con Tkinter para controlar un semáforo industrial tricolor simulado.
+Integrar reconocimiento de voz offline (Vosk) con Tkinter para controlar un semáforo industrial tricolor simulado. Además, se verificará la voz del hablante.
 
 ## Comandos
 - "Activar robot"
