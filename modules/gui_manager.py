@@ -5,7 +5,7 @@ def crear_ventana():
     """Crea la ventana principal con robot y devuelve los widgets principales."""
     ventana = tk.Tk()
     ventana.title("Robot industrial 4.0 - Seguridad del hablante")
-    ventana.geometry("550x650") # Un poco más alto para el log
+    ventana.geometry("650x650") # Un poco más alto para el log
     ventana.config(bg="#1e1e1e")
 
     # Título
@@ -30,7 +30,7 @@ def crear_ventana():
     resultado_label = tk.Label(ventana, text="...", font=("Arial", 11), bg="#1e1e1e", fg="gray")
     resultado_label.pack(pady=5)
 
-    # --- NUEVO: LISTBOX PARA LOG DE EVENTOS ---
+    # Registro de eventos
     tk.Label(ventana, text="📜 Registro de Eventos:", bg="#1e1e1e", fg="white").pack(anchor="w", padx=20)
     log_box = tk.Listbox(ventana, height=8, width=60, bg="#2d2d2d", fg="#00ff00", font=("Consolas", 9))
     log_box.pack(pady=5)
@@ -39,6 +39,6 @@ def crear_ventana():
         hora = datetime.datetime.now().strftime("%H:%M:%S")
         icono = "🔒" if tipo == "seguridad" else "🤖"
         if tipo == "error": icono = "❌"
-        log_box.insert(0, f"[{hora}] {icono} {mensaje}") # Insertar al principio
+        log_box.insert(0, f"[{hora}] {icono} {mensaje}") 
 
     return ventana, canvas, temp, prox, energia, estado_label, resultado_label, agregar_log

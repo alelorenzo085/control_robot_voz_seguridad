@@ -5,7 +5,7 @@ import json
 import numpy as np
 
 samplerate = 16000
-# Asegúrate que la ruta al modelo sea correcta
+# Ruta del modelo Vosk
 model = Model("vosk-model-small-es-0.42") 
 recognizer = KaldiRecognizer(model, samplerate)
 
@@ -17,8 +17,8 @@ def grabar_audio_autorizado(duracion=4, salida="audio_autorizado.wav"):
     audio = sd.rec(int(duracion * samplerate), samplerate=samplerate,
                    channels=1, dtype='float32')
     sd.wait()
-    
-    # Guardar con soundfile (formato válido)
+
+    # Guardar archivo WAV
     sf.write(salida, audio, samplerate)
     print(f"✅ Audio guardado en: {salida}")
     return audio.flatten()
@@ -31,7 +31,7 @@ def escuchar():
     2. El texto reconocido (para comandos)
     """
     print("🎤 Grabando...")
-    # Grabamos en int16
+    # Grabar audio
     audio = sd.rec(int(4 * samplerate), samplerate=samplerate,
                    channels=1, dtype='int16')
     sd.wait()
@@ -42,11 +42,10 @@ def escuchar():
         result = json.loads(recognizer.Result())
         text = result.get("text", "")
     else:
-        # A veces el texto queda en FinalResult
+       
         result = json.loads(recognizer.FinalResult())
         text = result.get("text", "")
         
-    # Aplanar el audio para que sea un array 1D (necesario para librosa)
     audio_flat = audio.flatten()
     
     return audio_flat, text

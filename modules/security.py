@@ -4,7 +4,7 @@ import librosa
 import soundfile as sf
 from scipy.spatial.distance import cdist
 
-# Ruta del audio de referencia (DEBES CREARLO PRIMERO)
+# Ruta del audio de referencia
 AUDIO_REF_PATH = "audio_autorizado.wav"
 UMBRAL_SEGURIDAD = 0.50  # Ajusta este valor 
 
@@ -24,7 +24,7 @@ def verificar_usuario(audio_actual_array, samplerate):
         return False, "⚠️ Falta archivo 'audio_autorizado.wav'", 0.0
 
     try:
-        # 1. Cargar referencia con soundfile (sin deprecation warnings)
+        # 1. Cargar referencia con soundfile
         data_ref, sr_ref = sf.read(AUDIO_REF_PATH)
         
         # Normalizar si es necesario
@@ -33,15 +33,13 @@ def verificar_usuario(audio_actual_array, samplerate):
         elif isinstance(data_ref[0], (int, np.integer)):
             data_ref = data_ref.astype(np.float32) / 32768.0
         
-        # Audio actual ya viene como array int16, convertir a float
+        # Normalizar audio actual si es necesario
         audio_act = audio_actual_array.astype(np.float32) / 32768.0
 
-        # 2. Extraer MFCCs (Librosa)
-        # Nota: librosa carga lento la primera vez
         mfcc_ref = librosa.feature.mfcc(y=data_ref, sr=sr_ref, n_mfcc=13)
         mfcc_act = librosa.feature.mfcc(y=audio_act, sr=samplerate, n_mfcc=13)
 
-        # 3. Normalización y Comparación (DTW)
+        # 3. Normalización y Comparación 
         A = zscore_per_coef(mfcc_ref)
         B = zscore_per_coef(mfcc_act)
 

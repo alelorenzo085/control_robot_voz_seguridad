@@ -18,7 +18,7 @@ def main():
         # 1. Obtener audio crudo Y texto
         audio_array, text = escuchar()
         
-        # 2. Verificar seguridad (MFCC + DTW)
+        # 2. Verificar seguridad de la voz
         is_verified, msg_security, score = verificar_usuario(audio_array, samplerate)
         
         if is_verified:
@@ -29,8 +29,7 @@ def main():
             # Procesar el comando solo si está verificado
             resultado_label.config(text=f"Texto: {text}")
             
-            # Nota: He ajustado la llamada a procesar_comando para coincidir con tu structure
-            # Asegúrate que procesar_comando acepte los argumentos correctos
+            
             if text:
                 procesar_comando(text, canvas, sensores, resultado_label, estado_label, ventana)
                 agregar_log(f"CMD: {text}", "info")
@@ -43,7 +42,7 @@ def main():
             resultado_label.config(text=f"Voz no autorizada ({score:.2f})")
             agregar_log(f"INTRUSO BLOQUEADO: {msg_security}", "error")
             
-            # Reset visual de alerta (opcional)
+            # Reset visual de alerta
             canvas.itemconfig(sensores[0], fill="grey20")
             canvas.itemconfig(sensores[1], fill="grey20")
             canvas.itemconfig(sensores[2], fill="grey20")
@@ -69,7 +68,7 @@ def main():
                                 font=("Arial", 12), bg="#ff9900", fg="black", width=15)
     boton_registrar.pack(pady=10)
 
-    # Mensaje inicial en el log
+    # Mensaje inicial en el registro
     agregar_log("Sistema iniciado. Esperando usuario...", "info")
     
     ventana.mainloop()
