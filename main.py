@@ -1,14 +1,15 @@
 import tkinter as tk
 from modules.gui_manager import crear_ventana
-from modules.audio_manager import escuchar
+from modules.audio_manager import escuchar, grabar_audio_autorizado
 from modules.command_processor import procesar_comando
 from modules.security import verificar_usuario
 from modules.audio_manager import samplerate
 
 def main():
     # Obtenemos widgets y la función de log
-    (ventana, canvas, sensores, estado_label, 
+    (ventana, canvas, temp, prox, energia, estado_label, 
      resultado_label, agregar_log) = crear_ventana()
+    sensores = [temp, prox, energia]
 
     def ejecutar_reconocimiento():
         estado_label.config(text="Escuchando... 🎤", fg="yellow")
@@ -51,6 +52,22 @@ def main():
     boton = tk.Button(ventana, text="Escuchar 🎤", command=ejecutar_reconocimiento,
                       font=("Arial", 14), bg="#00ffcc", fg="black", width=15, height=2)
     boton.pack(pady=20)
+
+    # Botón para registrar voz autorizada
+    def registrar_voz():
+        estado_label.config(text="🎤 Registrando voz autorizada...", fg="blue")
+        ventana.update()
+        try:
+            grabar_audio_autorizado(duracion=4)
+            estado_label.config(text="✅ Voz registrada correctamente", fg="#00ff00")
+            agregar_log("Voz autorizada registrada", "seguridad")
+        except Exception as e:
+            estado_label.config(text=f"❌ Error: {e}", fg="red")
+            agregar_log(f"Error al registrar: {e}", "error")
+
+    boton_registrar = tk.Button(ventana, text="Registrar Voz 🔐", command=registrar_voz,
+                                font=("Arial", 12), bg="#ff9900", fg="black", width=15)
+    boton_registrar.pack(pady=10)
 
     # Mensaje inicial en el log
     agregar_log("Sistema iniciado. Esperando usuario...", "info")

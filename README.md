@@ -4,6 +4,10 @@
 
 Integrar reconocimiento de voz offline (Vosk) con Tkinter para controlar un semáforo industrial tricolor simulado. Además, se verificará la voz del hablante.
 
+## Modo de uso
+En primer lugar, deberá de clicar en 'Registrar voz' para registrar su voz. Tras ello, podrá trabajar con la aplicación ejecutando los
+comandos que se mencionan a continuación.
+
 ## Comandos
 - "Activar robot"
 - "Detener robot"
